@@ -1,44 +1,75 @@
 <template lang="pug">
-label 總共多少
-input(type="number" value=300 v-model="totalValue")
-
-label 預設
-input(type="radio" v-model="methodInput" @change="executeSelectedMethod" value="normal" name="method" checked)
-label 定額
-input(type="radio" v-model="methodInput" @change="executeSelectedMethod" value="fixed" name="method")
-label 百分比
-input(type="radio" v-model="methodInput" @change="executeSelectedMethod" value="percentage" name="method")
-label 比例
-input(type="radio" v-model="methodInput" @change="executeSelectedMethod" value="ratio" name="method")
-
-.edit(v-for="apportionment in apportionments")
-  .name {{ apportionment.name }}
+#test
+  label 總共多少
+  input(type="number" value=300 v-model.number="totalValue")
+  br
+  label 均分
+  input(type="radio" v-model="methodInput" @change="executeSelectedMethod" value="equal" name="method" checked)
+  br
+  label 定額
+  input(type="radio" v-model="methodInput" @change="executeSelectedMethod" value="fixed" name="method")
+  br
+  label 百分比
+  input(type="radio" v-model="methodInput" @change="executeSelectedMethod" value="percentage" name="method")
+  br
   label 比例
-  input.portion(type="number" v-model.number="apportionment.portion")
-  label 金額
-  input.calculation(type="number" v-model.number="apportionment.calculation")
+  input(type="radio" v-model="methodInput" @change="executeSelectedMethod" value="ratio" name="method")
+  br
+  component(:is="editor" :data="apportionments")
+  button(@click="addMember") 新增
 
-//- p {{ nowText }}
 </template>
 
 <script setup>
-import { computed, reactive, ref, toRef, toRefs, watchEffect } from 'vue';
+import { 
+  computed, 
+  reactive, 
+  ref, 
+  watchEffect, 
+  provide } from 'vue';
+import Equal from "@/components/Equal.vue"
+import Ratio from "@/components/Ratio.vue"
+import Percentage from "@/components/Percentage.vue"
+import Fixed from "@/components/Fixed.vue"
+
+const editorComponents = {
+  Equal,
+  Ratio,
+  Percentage,
+  Fixed
+}
 const totalValue = ref(300)
-const nowText = ref("normal")
-const methodInput = ref("normal")
+provide("totalValue", totalValue)
+const methodInput = ref("equal")
+const editor = computed(()=>{
+  let name = methodInput.value[0].toUpperCase() + methodInput.value.slice(1)
+  return editorComponents[name]
+})
 const methods = {
-  normal(){
-    nowText.value = "normal"
+  equal(){
+    apportionments.forEach( (a, i) => {
+      let dividedValue = 
+        apportionments.length != 0 ?
+        totalValue.value / apportionments.length :
+        0
+
+      apportionments[i] = { name: a.name, calculation: dividedValue }
+    })
   },
   fixed(){
-    nowText.value = "fixed"
-    return 1
+    apportionments.forEach( (a, i) => {
+      apportionments[i] = { name: a.name, calculation: 0 }
+    })
   },
   percentage(){
-    nowText.value = "percentage"
+    apportionments.forEach( (a, i) => {
+      apportionments[i] = { name: a.name, portion: 0, calculation: 0 }
+    })
   },
   ratio(){
-    nowText.value = "ratio"
+    apportionments.forEach( (a, i) => {
+      apportionments[i] = { name: a.name, portion: 1, calculation: 0 }
+    })
   }
 }
 
@@ -46,34 +77,37 @@ const executeSelectedMethod = () => {
   methods[methodInput.value]()
 }
 
-const members = reactive([
+const apportionments = reactive([
   {
-    name: "IKA"
-  },
-  {
-    name: "Sharon"
-  }
-])
-const apportionments = reactive([...members].map( member => {
-  return {
-    ...member,
+    name: "IKA",
     portion: 1,
     calculation: 0
-  }
-}))
+  },
+  {
+    name: "Sharon",
+    portion: 1,
+    calculation: 0
+  },
+  {
+    name: "Nick",
+    portion: 1,
+    calculation: 0
+  },
+])
 
-watchEffect(()=>{
-  let portionTotal = apportionments.map( a => a.portion ).reduce( (total, p) => total + p , 0)
-
-  apportionments.forEach( a => {
-    let ratio = a.portion / portionTotal
-    a.calculation = totalValue.value * ratio
+const addMember = () => {
+  apportionments.push({
+    name: Math.random(),
+    portion: 1,
+    calculation: 0
   })
-  
-})
+}
+
+
 
 </script>
 
 <style lang="sass" scoped>
-
+#editor
+  border: 1px solid green
 </style>
