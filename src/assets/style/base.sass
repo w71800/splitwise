@@ -1,2 +1,22 @@
+@import ./variables
+  
+*
+  box-sizing: border-box
+  position: relative
+  color: $color_text
+  
+html, body
+  margin: 0
+  padding: 0
+  height: 100%
+
+a
+  text-decoration: none
+  &.left, &.right
+    font-size: .8rem
+    font-weight: 700
+    color: $color_primary
+
+
 input[type="text"], input[type="number"]
   width: 200px

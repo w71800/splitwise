@@ -1,11 +1,11 @@
 <template lang="pug">
-h1 edit
+h1 init
 </template>
 
 <script setup>
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="sass" scoped>
 
 </style>

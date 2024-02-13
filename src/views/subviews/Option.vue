@@ -1,6 +1,15 @@
 <template lang="pug">
 #option
-  component(:is="editor" :data="apportionments")
+  .description
+    .main 均等分擔
+    .sub 請選擇需要負擔的成員
+  .options
+    .option(v-for="option in options")
+      label(:for="option.name")
+      input(name="option" type="radio" v-model="methodInput" :value="option.name" :id="option.name")
+      img(:src="option.name == methodInput? option.checked_img_src : option.img_src", alt="")
+      //- img(:src="option.img_src", alt="")
+  component(:is="editorComponent" :data="apportionments")
 </template>
 
 <script setup>
@@ -10,22 +19,42 @@ import {
   ref, 
   watchEffect, 
   provide } from 'vue';
+import { getComponentName } from "@/assets/script/utils.js"
 import Equal from "@/components/editor/Equal.vue"
 import Ratio from "@/components/editor/Ratio.vue"
 import Percentage from "@/components/editor/Percentage.vue"
 import Fixed from "@/components/editor/Fixed.vue"
 
-const editorComponents = {
-  Equal,
-  Ratio,
-  Percentage,
-  Fixed
-}
+const editorComponents = { Equal, Fixed, Percentage, Ratio }
+const options = [
+  {
+    name: "equal",
+    img_src: "src/assets/img/equal.png",
+    checked_img_src: "src/assets/img/equal_checked.png"
+  },
+  {
+    name: "fixed",
+    img_src: "src/assets/img/fixed.png",
+    checked_img_src: "src/assets/img/fixed_checked.png"
+  },
+  {
+    name: "percentage",
+    img_src: "src/assets/img/percentage.png",
+    checked_img_src: "src/assets/img/percentage_checked.png"
+  },
+  {
+    name: "ratio",
+    img_src: "src/assets/img/ratio.png",
+    checked_img_src: "src/assets/img/ratio_checked.png"
+  },
+
+]
+
 const totalValue = ref(300)
 provide("totalValue", totalValue)
 const methodInput = ref("equal")
-const editor = computed(()=>{
-  let name = methodInput.value[0].toUpperCase() + methodInput.value.slice(1)
+const editorComponent = computed(()=>{
+  let name = getComponentName(methodInput)
   return editorComponents[name]
 })
 const methods = {
@@ -91,6 +120,34 @@ const addMember = () => {
 </script>
 
 <style lang="sass" scoped>
-#editor
-  // border: 1px solid green
+#option
+
+.description
+  padding: 30px 20px
+  font-size: .8rem
+  text-align: center
+  .main 
+    font-weight: 600
+  .sub 
+.options
+  display: flex
+  justify-content: space-between
+
+.option
+  width: 40px
+  height: 25px
+  border: 1px solid rgba(#999, .3)
+  label
+    position: absolute
+    width: 100%
+    height: 100%
+    z-index: 20
+    cursor: pointer
+  input[type="radio"]
+    display: none
+  img
+    width: 100%
+    height: 100%
+    object-fit: cover
+  
 </style>

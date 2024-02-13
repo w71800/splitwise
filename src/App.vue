@@ -1,12 +1,15 @@
+<template lang="pug">
+Topbar
+RouterView
+</template>
+
 <script setup>
+import Topbar from './components/Topbar.vue';
 import { RouterLink, RouterView } from 'vue-router'
 
 
 </script>
 
-<template lang="pug">
-RouterView
-</template>
 
 <style scoped lang="sass">
 h1
