@@ -11,7 +11,9 @@ import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 
-<style scoped lang="sass">
-h1
-  color: red
+<style lang="sass">
+html, body
+  margin: 0
+  padding: 0
+  height: 100%
 </style>

@@ -4,21 +4,33 @@
   color: #373b3f;
 }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-
 a {
   text-decoration: none;
 }
 a.left, a.right {
   font-size: 0.8rem;
   font-weight: 700;
-  color: #1bc29f;
+  color: #17a582;
 }
 
 input[type=text], input[type=number] {
   width: 200px;
+}
+
+.apportionment {
+  display: flex;
+  align-items: center;
+  padding: 5px 5px;
+  border-bottom: 1px solid rgba(153, 153, 153, 0.4);
+}
+.apportionment .icon {
+  width: 35px;
+  height: 35px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.apportionment .name {
+  font-weight: 400;
+  font-size: 0.8rem;
 }

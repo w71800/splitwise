@@ -5,10 +5,10 @@
   position: relative
   color: $color_text
   
-html, body
-  margin: 0
-  padding: 0
-  height: 100%
+// html, body
+//   margin: 0
+//   padding: 0
+//   height: 100%
 
 a
   text-decoration: none
@@ -17,6 +17,23 @@ a
     font-weight: 700
     color: $color_primary
 
-
 input[type="text"], input[type="number"]
   width: 200px
+
+#editor
+  // padding: 0px $container_padding
+
+.apportionment
+  display: flex
+  align-items: center
+  padding: 5px 5px
+  border-bottom: 1px solid rgba(#999, .4)
+  .icon
+    width: 35px
+    height: 35px
+    border: 1px solid #000
+    border-radius: 50%
+    margin-right: 10px
+  .name
+    font-weight: 400
+    font-size: .8rem

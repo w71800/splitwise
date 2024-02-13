@@ -1,14 +1,13 @@
 <template lang="pug">
 #option
   .description
-    .main 均等分擔
-    .sub 請選擇需要負擔的成員
+    .main {{ description[0] }}
+    .sub {{ description[1] }}
   .options
     .option(v-for="option in options")
       label(:for="option.name")
       input(name="option" type="radio" v-model="methodInput" :value="option.name" :id="option.name")
       img(:src="option.name == methodInput? option.checked_img_src : option.img_src", alt="")
-      //- img(:src="option.img_src", alt="")
   component(:is="editorComponent" :data="apportionments")
 </template>
 
@@ -30,25 +29,42 @@ const options = [
   {
     name: "equal",
     img_src: "src/assets/img/equal.png",
-    checked_img_src: "src/assets/img/equal_checked.png"
+    checked_img_src: "src/assets/img/equal_checked.png", 
+    description: [
+      "均等分擔",
+      "請選擇需要負擔的成員"
+    ]
   },
   {
     name: "fixed",
     img_src: "src/assets/img/fixed.png",
-    checked_img_src: "src/assets/img/fixed_checked.png"
+    checked_img_src: "src/assets/img/fixed_checked.png",
+    description: [
+      "精確分擔",
+      "請輸入每個成員要分擔的金額"
+    ]
   },
   {
     name: "percentage",
     img_src: "src/assets/img/percentage.png",
-    checked_img_src: "src/assets/img/percentage_checked.png"
+    checked_img_src: "src/assets/img/percentage_checked.png",
+    description: [
+      "百分比分擔",
+      "請輸入各個成員須要分擔的百分比"
+    ]
   },
   {
     name: "ratio",
     img_src: "src/assets/img/ratio.png",
-    checked_img_src: "src/assets/img/ratio_checked.png"
+    checked_img_src: "src/assets/img/ratio_checked.png",
+    description: [
+      "比例分擔",
+      "請選擇各個成員須要分擔的比例"
+    ]
   },
 
 ]
+
 
 const totalValue = ref(300)
 provide("totalValue", totalValue)
@@ -57,6 +73,13 @@ const editorComponent = computed(()=>{
   let name = getComponentName(methodInput)
   return editorComponents[name]
 })
+
+const description = computed(()=>{
+  let { description } = options.filter(o => o.name == methodInput.value)[0]
+
+  return description
+})
+
 const methods = {
   equal(){
     apportionments.forEach( (a, i) => {
@@ -130,8 +153,11 @@ const addMember = () => {
     font-weight: 600
   .sub 
 .options
+  max-width: 320px
   display: flex
   justify-content: space-between
+  margin-bottom: 10px
+  padding: 0px $container_padding
 
 .option
   width: 40px

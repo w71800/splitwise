@@ -1,10 +1,10 @@
 <template lang="pug">
 #editor.equal
-  h1 Ratio
-  .edit(v-for="a in apportionments")
+  .apportionment(v-for="a in apportionments")
+    .icon
+      img
     .name {{ a.name }}
-    label 金額
-    span &nbsp; {{ a.calculation }} 元
+    .checker
 </template>
 
 <script setup>
@@ -28,5 +28,6 @@ watch(() => totalValue.value, (newValue, oldValue) => {
 </script>
 
 <style lang="sass" scoped>
-
+*
+  position: relative
 </style>
