@@ -1,19 +1,15 @@
 <template lang="pug">
-#editor.ratio
-  h1 Ratio
-  .edit(v-for="a in apportionments")
-    .name {{ a.name }}
-    label 百分比
-    input.portion(type="number" v-model.number="a.portion" min=0 max=100)
-    span %
-    br
-    span 金額 &nbsp; {{ a.calculation }} 元
-  div
-    span 剩下 {{ restValue }} %
+#editor.percentage
+  Apportionment(v-for="a in apportionments" :data="a")
+    template(#percentage)
+      .wrapper(:class="{ notZero: a.portion == ''}")
+        input(type="number" placeholder="0" v-model.number="a.portion")
+  //- span 剩下 {{ restValue }} %
 </template>
 
 <script setup>
 import { computed, inject } from 'vue';
+import Apportionment from '../Apportionment.vue';
 
 const totalValue = inject("totalValue")
 const props = defineProps(["data"])
@@ -33,5 +29,18 @@ const restValue = computed(() => {
 </script>
 
 <style lang="sass" scoped>
+.wrapper
+  right: $container_padding
+  &::after
+    content: "%"
+    position: absolute
+    top: 50%
+    right: -12px
+    transform: translateY(-50%)
+    font-size: .7rem
+    color: rgba(#999, .8)
+    display: block
+    width: auto
+    height: auto
 
 </style>

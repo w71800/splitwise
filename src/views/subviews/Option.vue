@@ -68,7 +68,8 @@ const options = [
 
 const totalValue = ref(300)
 provide("totalValue", totalValue)
-const methodInput = ref("equal")
+const methodInput = ref("ratio")
+provide("method", methodInput)
 const editorComponent = computed(()=>{
   let name = getComponentName(methodInput)
   return editorComponents[name]
@@ -115,18 +116,24 @@ const executeSelectedMethod = () => {
 const apportionments = reactive([
   {
     name: "IKA",
+    userImg_src: "src/assets/img/user.jpg",
     portion: 1,
-    calculation: 0
+    calculation: 0,
+    isPayer: true
   },
   {
     name: "Sharon",
+    userImg_src: "src/assets/img/user.jpg",
     portion: 1,
-    calculation: 0
+    calculation: 0,
+    isPayer: false
   },
   {
     name: "Nick",
+    userImg_src: "src/assets/img/user.jpg",
     portion: 1,
-    calculation: 0
+    calculation: 0,
+    isPayer: false
   },
 ])
 
@@ -155,14 +162,15 @@ const addMember = () => {
 .options
   max-width: 320px
   display: flex
-  justify-content: space-between
+  // justify-content: space-between
   margin-bottom: 10px
   padding: 0px $container_padding
 
 .option
-  width: 40px
-  height: 25px
+  width: 55px
+  height: 28px
   border: 1px solid rgba(#999, .3)
+  margin-right: 10px
   label
     position: absolute
     width: 100%

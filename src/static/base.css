@@ -13,24 +13,41 @@ a.left, a.right {
   color: #17a582;
 }
 
-input[type=text], input[type=number] {
-  width: 200px;
+#editor input {
+  width: 50px;
+  border: none;
+  border-bottom: 1px solid #000;
+  text-align: right;
+}
+#editor input::placeholder {
+  color: rgba(153, 153, 153, 0.5);
+}
+#editor input[type=number]::-webkit-outer-spin-button,
+#editor input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 
 .apportionment {
   display: flex;
   align-items: center;
-  padding: 5px 5px;
+  padding: 5px 10px;
   border-bottom: 1px solid rgba(153, 153, 153, 0.4);
 }
 .apportionment .icon {
   width: 35px;
   height: 35px;
-  border: 1px solid #000;
   border-radius: 50%;
   margin-right: 10px;
+  overflow: hidden;
+}
+.apportionment .icon img {
+  width: 100%;
+  height: 100%;
 }
 .apportionment .name {
   font-weight: 400;
   font-size: 0.8rem;
+}
+.apportionment .wrapper.notZero::before, .apportionment .wrapper.notZero::after {
+  color: #373b3f;
 }
