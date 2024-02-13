@@ -1,11 +1,11 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import Test from './components/Test.vue'
+
 
 </script>
 
 <template lang="pug">
-Test
+RouterView
 </template>
 
 <style scoped lang="sass">

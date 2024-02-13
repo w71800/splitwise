@@ -1,23 +1,6 @@
 <template lang="pug">
-#test
-  label 總共多少
-  input(type="number" value=300 v-model.number="totalValue")
-  br
-  label 均分
-  input(type="radio" v-model="methodInput" @change="executeSelectedMethod" value="equal" name="method" checked)
-  br
-  label 定額
-  input(type="radio" v-model="methodInput" @change="executeSelectedMethod" value="fixed" name="method")
-  br
-  label 百分比
-  input(type="radio" v-model="methodInput" @change="executeSelectedMethod" value="percentage" name="method")
-  br
-  label 比例
-  input(type="radio" v-model="methodInput" @change="executeSelectedMethod" value="ratio" name="method")
-  br
+#option
   component(:is="editor" :data="apportionments")
-  button(@click="addMember") 新增
-
 </template>
 
 <script setup>
@@ -27,10 +10,10 @@ import {
   ref, 
   watchEffect, 
   provide } from 'vue';
-import Equal from "@/components/Equal.vue"
-import Ratio from "@/components/Ratio.vue"
-import Percentage from "@/components/Percentage.vue"
-import Fixed from "@/components/Fixed.vue"
+import Equal from "@/components/editor/Equal.vue"
+import Ratio from "@/components/editor/Ratio.vue"
+import Percentage from "@/components/editor/Percentage.vue"
+import Fixed from "@/components/editor/Fixed.vue"
 
 const editorComponents = {
   Equal,
@@ -109,5 +92,5 @@ const addMember = () => {
 
 <style lang="sass" scoped>
 #editor
-  border: 1px solid green
+  // border: 1px solid green
 </style>
