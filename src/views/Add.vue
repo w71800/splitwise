@@ -12,10 +12,7 @@ import Summary from '@/views/subviews/Summary.vue'
 
 const subviewComponents = { Init, Edit, Option, Summary }
 const nowSubview = ref("option")
-const subviewComponent = computed(() => {
-  let compName = getComponentName(nowSubview)
-  return subviewComponents[compName]
-})
+const subviewComponent = computed(() => subviewComponents[getComponentName(nowSubview)] )
 
 
 

@@ -1,14 +1,26 @@
 <template lang="pug">
 #option
   .description
-    .main {{ description[0] }}
-    .sub {{ description[1] }}
+    .main {{ description.main }}
+    .sub {{ description.sub }}
   .options
-    .option(v-for="option in options")
+    .option(v-for="option in options" :key="option.name")
       label(:for="option.name")
-      input(name="option" type="radio" v-model="methodInput" :value="option.name" :id="option.name")
-      img(:src="option.name == methodInput? option.checked_img_src : option.img_src", alt="")
-  component(:is="editorComponent" :data="apportionments")
+      input(
+        type="radio"
+        name="option"
+        :id="option.name"
+        v-model="methodInput"
+        :value="option.name"
+      )
+      img(
+        :src="getOptionImageSrc(option)"
+        :alt="option.name"
+      )
+  component(
+    :is="editorComponent"
+    :data="apportionments"
+  )
 </template>
 
 <script setup>

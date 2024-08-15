@@ -1,7 +1,9 @@
+@charset "UTF-8";
 * {
   box-sizing: border-box;
   position: relative;
   color: #373b3f;
+  font-family: "思源黑體", sans-serif;
 }
 
 a {
